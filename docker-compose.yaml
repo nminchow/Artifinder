@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  artifinder:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    volumes:
+      - ./artifinder:/app/artifinder
+      - node_modules:/app/artifinder/node_modules
+
+volumes:
+  node_modules:
