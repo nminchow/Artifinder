@@ -19,6 +19,7 @@ export default new Vuex.Store({
     },
     logout: state => state.user.name = null,
     togglePending: state => state.user.pendingLogin = true,
+    setPending: (state, payload) => state.user.pendingLogin = payload.pending,
   },
   actions: {
 

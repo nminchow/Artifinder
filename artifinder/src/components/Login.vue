@@ -1,8 +1,31 @@
 <template>
-  <div v-if="pendingLogin" class="about">
-    <input :v-model="name">
-    <button @click="login">login</button>
-  </div>
+  <v-dialog max-width="290" :value="pendingLogin" @input="setPending">
+     <v-card>
+       <v-card-text>
+         Other players will need your username to join or add you.
+        </v-card-text>
+       <v-form>
+        <v-container>
+          <v-layout row wrap>
+            <v-text-field
+              label="Steam ID"
+              :v-model="name"
+            ></v-text-field>
+          </v-layout>
+        </v-container>
+      </v-form>
+      <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            @click="login"
+          >
+            Set
+          </v-btn>
+        </v-card-actions>
+     </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -22,6 +45,13 @@ const login = function login() {
     // ...
   });
 };
+
+const setPending = function setPending(value) {
+  this.$store.commit({
+    type: 'setPending',
+    pending: value == true,
+  })
+}
 
 export default {
   data() {
@@ -49,6 +79,7 @@ export default {
   },
   methods: {
     login,
+    setPending,
   },
   computed: {
     loggedIn() {

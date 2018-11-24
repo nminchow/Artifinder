@@ -1,15 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App bleh"/> -->
-    <br>
-    <button @click="addItem">Add Item</button>
-    <ul>
-      <li v-for="game in games" :key="game.created.seconds + (game.created.nanoseconds/10000000)">
-        {{ game.description }} - {{ game.created }}
-      </li>
-    </ul>
+    <v-toolbar color="accent">
+      <v-toolbar-title class="white--text">Games</v-toolbar-title>
 
+      <v-spacer></v-spacer>
+
+      <v-btn @click="addItem">Create Game</v-btn>
+    </v-toolbar>
+
+      <v-list dense two-line>
+        <template v-for="game in games">
+        <v-list-tile
+          :key="game.created.seconds + (game.created.nanoseconds/10000000)"
+          avatar
+          ripple
+          @click="toggle(index)"
+        >
+          <v-list-tile-content>
+            <v-list-tile-title>{{ game.description }}</v-list-tile-title>
+            <v-list-tile-sub-title> {{ game.created }} </v-list-tile-sub-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </template>
+    </v-list>
   </div>
 </template>
 
