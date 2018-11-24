@@ -9,37 +9,38 @@
 import firebase from '../firebase';
 
 const login = function login() {
-  firebase.instance.auth().signInAnonymously().then( response => {
+  firebase.instance.auth().signInAnonymously().then((response) => {
     this.$store.commit({
       type: 'login',
       name: this.name,
-    })
-  }).catch(error => {
+      userId: response.user.uid,
+    });
+  }).catch((error) => {
     // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
+    const errorCode = error.code;
+    const errorMessage = error.message;
     // ...
   });
-}
+};
 
 export default {
-  data: function() {
+  data() {
     return {
       name: '',
-    }
+    };
   },
-  mounted: function() {
-    var self = this;
-    firebase.instance.auth().onAuthStateChanged(function(user) {
+  mounted() {
+    const self = this;
+    firebase.instance.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        var providerData = user.providerData;
+        const displayName = user.displayName;
+        const email = user.email;
+        const emailVerified = user.emailVerified;
+        const photoURL = user.photoURL;
+        const isAnonymous = user.isAnonymous;
+        const uid = user.uid;
+        const providerData = user.providerData;
         // ...
       } else {
         self.$store.commit('logout');
@@ -50,13 +51,12 @@ export default {
     login,
   },
   computed: {
-    loggedIn () {
+    loggedIn() {
       return this.$store.state.user.name != null;
     },
-    pendingLogin () {
-      return  this.$store.state.user.pendingLogin;
-    }
-  }
-}
+    pendingLogin() {
+      return this.$store.state.user.pendingLogin;
+    },
+  },
+};
 </script>
-

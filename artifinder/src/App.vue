@@ -16,7 +16,7 @@ export default {
   components: {
     Login,
   },
-}
+};
 </script>
 
 

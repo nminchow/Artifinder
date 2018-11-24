@@ -1,19 +1,18 @@
 import firebase from 'firebase';
 import firestore from 'firebase/firestore';
-import store from './store'
-
+import store from './store';
 
 
 class FireBase {
-  constructor(){
+  constructor() {
     firebase.initializeApp({
       apiKey: 'AIzaSyBEkwobHbPAQ2Yya6VNY1BNsLFg1wR0g_w',
       authDomain: 'artifinder-191f7.firebaseapp.com',
-      projectId: 'artifinder-191f7'
+      projectId: 'artifinder-191f7',
     });
     this.db = firebase.firestore();
     this.db.settings({
-      timestampsInSnapshots: true
+      timestampsInSnapshots: true,
     });
     this.instance = firebase;
   }

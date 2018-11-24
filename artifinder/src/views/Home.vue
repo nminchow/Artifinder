@@ -18,52 +18,52 @@
 import firebase from '../firebase';
 
 const addItem = function addItem() {
-  if(!this.loggedIn) {
+  if (!this.loggedIn) {
     this.$store.commit('togglePending');
     return;
   }
-  firebase.db.collection("games").add({
+  firebase.db.collection('games').add({
     description: `Game ${this.games.length}`,
     playerLimit: 4,
     players: ['creator'],
-    created: firebase.instance.firestore.FieldValue.serverTimestamp()
+    created: firebase.instance.firestore.FieldValue.serverTimestamp(),
   })
-  .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id);
-  })
-  .catch(function(error) {
-      console.error("Error adding document: ", error);
-  });
-}
+    .then((docRef) => {
+      console.log('Document written with ID: ', docRef.id);
+    })
+    .catch((error) => {
+      console.error('Error adding document: ', error);
+    });
+};
 
 export default {
   name: 'home',
-  data: function() {
+  data() {
     return {
       games: [],
-      db: null
-    }
+      db: null,
+    };
   },
   components: {
   },
   methods: {
     addItem,
   },
-  mounted: function() {
-    var self = this;
-    firebase.db.collection("games").orderBy("created")
-      .onSnapshot(function(querySnapshot) {
+  mounted() {
+    const self = this;
+    firebase.db.collection('games').orderBy('created')
+      .onSnapshot((querySnapshot) => {
         self.games = [];
-        querySnapshot.forEach(function(doc) {
-            if(doc.metadata.hasPendingWrites) return;
-            self.games.push(doc.data());
+        querySnapshot.forEach((doc) => {
+          if (doc.metadata.hasPendingWrites) return;
+          self.games.push(doc.data());
         });
       });
   },
   computed: {
-    loggedIn () {
+    loggedIn() {
       return this.$store.state.user.name != null;
     },
-  }
+  },
 };
 </script>
