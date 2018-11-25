@@ -3,31 +3,55 @@
     <v-app id="inspire" dark>
       <v-toolbar app fixed clipped-left>
         <v-toolbar-title>Artifinder</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <Login/>
+        <v-toolbar-items>
+          <v-menu offset-y>
+            <v-btn slot="activator" flat>{{ name }}</v-btn>
+            <v-list>
+              <v-list-tile
+                @click="logout"
+              >
+                <v-list-tile-title>logout</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </v-toolbar-items>
       </v-toolbar>
       <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-          <Login/>
-          <v-flex shrink>
-            <div id="nav">
-              <router-link to="/">Home</router-link> |
-              <router-link to="/about">About</router-link>
-            </div>
-            <router-view/>
-          </v-flex>
+        <router-view/>
+      </v-content>
+      <v-footer dark height="auto" >
+        <v-layout justify-center row wrap>
+          <v-btn class="white--text" icon href="https://discord.gg/7arjbp4" target="_blank">
+            <font-awesome-icon :icon="['fab', 'discord']" size="2x" />
+          </v-btn>
+          <v-btn class="white--text" icon href="https://github.com/nminchow/Artifinder" target="_blank">
+            <font-awesome-icon :icon="['fab', 'github']" size="2x" />
+          </v-btn>
         </v-layout>
-      </v-container>
-    </v-content>
+      </v-footer>
     </v-app>
   </div>
 </template>
 
 <script>
-import Login from './components/Login.vue';
+import Login from './components/login.vue';
+import firebase from './firebase';
 
 export default {
   components: {
     Login,
+  },
+  computed: {
+    name() {
+      return this.$store.state.user.name;
+    },
+  },
+  methods: {
+    logout() {
+      firebase.instance.auth().signOut();
+    },
   },
 };
 </script>

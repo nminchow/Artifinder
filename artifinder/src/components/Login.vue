@@ -2,14 +2,17 @@
   <v-dialog max-width="290" :value="pendingLogin" @input="setPending">
      <v-card>
        <v-card-text>
-         Other players will need your username to join or add you.
+         Please select a username. Your Steam ID is recomended so other users know who you are in-game.
         </v-card-text>
        <v-form>
         <v-container>
           <v-layout row wrap>
             <v-text-field
-              label="Steam ID"
-              :v-model="name"
+              label="Username / Steam ID"
+              data-vv-name="name"
+              v-validate="'required|min:5'"
+              v-model="name"
+              :error-messages="errors.collect('name')"
             ></v-text-field>
           </v-layout>
         </v-container>
@@ -32,26 +35,37 @@
 import firebase from '../firebase';
 
 const login = function login() {
-  firebase.instance.auth().signInAnonymously().then((response) => {
-    this.$store.commit({
-      type: 'login',
-      name: this.name,
-      userId: response.user.uid,
+  this.$validator.validateAll().then((result) => {
+    if(!result) return;
+    firebase.instance.auth().signInAnonymously().catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ...
     });
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ...
   });
+};
+
+const createIfNeeded = function createIfNeeded(user) {
+  const userDataRef = firebase.db.collection('userData');
+
+  // create default state if new
+  if (this.pendingLogin) {
+    const defaultData = {
+      name: this.name,
+      currentGame: null,
+    };
+    return userDataRef.doc(user.uid).set(defaultData);
+  }
+  return Promise.resolve();
 };
 
 const setPending = function setPending(value) {
   this.$store.commit({
     type: 'setPending',
     pending: value == true,
-  })
-}
+  });
+};
 
 export default {
   data() {
@@ -63,15 +77,18 @@ export default {
     const self = this;
     firebase.instance.auth().onAuthStateChanged((user) => {
       if (user) {
-        // User is signed in.
-        const displayName = user.displayName;
-        const email = user.email;
-        const emailVerified = user.emailVerified;
-        const photoURL = user.photoURL;
-        const isAnonymous = user.isAnonymous;
-        const uid = user.uid;
-        const providerData = user.providerData;
-        // ...
+        self.createIfNeeded(user).then(() => {
+          firebase.db.collection('userData').doc(user.uid).onSnapshot((document) => {
+            const data = document.data();
+            self.$store.commit({
+              type: 'login',
+              name: data.name,
+              currentGame: data.currentGame,
+              userId: user.uid,
+            });
+          })
+
+        });
       } else {
         self.$store.commit('logout');
       }
@@ -80,6 +97,7 @@ export default {
   methods: {
     login,
     setPending,
+    createIfNeeded,
   },
   computed: {
     loggedIn() {

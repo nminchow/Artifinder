@@ -1,28 +1,34 @@
 import Vue from 'vue';
+import Vuetify from 'vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import Vuetify from 'vuetify'
-import colors from 'vuetify/es5/util/colors'
+import VeeValidate from 'vee-validate';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faDiscord } from '@fortawesome/free-brands-svg-icons'
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import 'vuetify/dist/vuetify.min.css';
 
-import 'vuetify/dist/vuetify.min.css'
+library.add(faDiscord, faGithub)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false;
 
-// Helpers
-
+Vue.use(VeeValidate);
 Vue.use(Vuetify, {
   theme: {
-    primary: "#424242",
-    secondary: "#FFEA00",
-    accent: "#9C27B0",
-    error: "#f44336",
-    warning: "#ffeb3b",
-    info: "#2196f3",
-    success: "#4caf50"
-  }
-})
+    primary: '#a59465',
+    secondary: '#56077a',
+    accent: '#3e918b',
+    error: '#e57937',
+    warning: '#ffeb3b',
+    info: '#2196f3',
+    success: '#a59465',
+  },
+});
 
 new Vue({
   router,
