@@ -1,5 +1,7 @@
-import firebase from 'firebase';
-import firestore from 'firebase/firestore';
+import firebase from 'firebase/app';
+import 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 import store from './store';
 
 
