@@ -79,6 +79,7 @@ const createGame = function createGame() {
           type: this.type,
         }).then(docRef => gameHelper.addUserToGame(this.$store, docRef)).then(() => {
           this.setCreating(false);
+          this.creating = false;
         })
         .catch(() => {
       });

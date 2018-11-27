@@ -39,11 +39,11 @@ const login = function login() {
   this.$validator.validateAll().then((result) => {
     if(!result) return;
     this.loggingIn = true;
-    firebase.instance.auth().signInAnonymously().catch((error) => {
+    firebase.instance.auth().signInAnonymously().then(() => {
+    }).catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      this.loggingIn = false;
       // ...
     });
   });
@@ -91,7 +91,7 @@ export default {
               userId: user.uid,
             });
           })
-
+          this.loggingIn = false
         });
       } else {
         self.$store.commit('logout');
