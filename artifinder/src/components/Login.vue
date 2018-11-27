@@ -10,7 +10,7 @@
             <v-text-field
               label="Username / Steam ID"
               data-vv-name="name"
-              v-validate="'required|min:5'"
+              v-validate="'required'"
               v-model="name"
               :error-messages="errors.collect('name')"
             ></v-text-field>

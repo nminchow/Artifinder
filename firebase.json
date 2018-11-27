@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "artifinder/dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -19,7 +19,7 @@
         <v-card-actions>
           <v-btn v-if="joinable" color="success" @click="join">Join</v-btn>
           <v-btn v-if="inGame && game.link != null && !copyTooltip" color="accent" @click="copyLink">Copy Game Link</v-btn>
-          <v-btn color="primary" v-if="copyTooltip"> Coppied to clipboard! </v-btn>
+          <v-btn color="primary" v-if="copyTooltip"> Copied to clipboard! </v-btn>
           <v-spacer></v-spacer>
           <v-btn fab small color="red" flat v-if="selfIsOwner" @click="deleteGame"><v-icon>delete_forever</v-icon></v-btn>
         </v-card-actions>
