@@ -44,6 +44,7 @@
           <v-btn
             color="success"
             @click="createGame"
+            :disabled="creating"
           >
             Create
           </v-btn>
@@ -67,6 +68,7 @@ const setCreating = function setCreating(value) {
 const createGame = function createGame() {
   this.$validator.validateAll().then((result) => {
     if (result) {
+        this.creating = true;
         firebase.db.collection('games').add({
           description: this.name,
           playerLimit: this.size,
@@ -93,6 +95,7 @@ export default {
       size: 4,
       types: ['draft', 'constructed'],
       type: 'draft',
+      creating: false,
     };
   },
   methods: {

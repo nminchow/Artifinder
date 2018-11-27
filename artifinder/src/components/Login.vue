@@ -23,6 +23,7 @@
           <v-btn
             color="primary"
             @click="login"
+            :disabled="loggingIn"
           >
             Set
           </v-btn>
@@ -37,10 +38,12 @@ import firebase from '../firebase';
 const login = function login() {
   this.$validator.validateAll().then((result) => {
     if(!result) return;
+    this.loggingIn = true;
     firebase.instance.auth().signInAnonymously().catch((error) => {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
+      this.loggingIn = false;
       // ...
     });
   });
@@ -71,6 +74,7 @@ export default {
   data() {
     return {
       name: '',
+      loggingIn: false,
     };
   },
   mounted() {

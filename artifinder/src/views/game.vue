@@ -17,7 +17,7 @@
           </div>
         </v-card-title>
         <v-card-actions>
-          <v-btn v-if="joinable" color="success" @click="join">Join</v-btn>
+          <v-btn v-if="joinable" :disabled="joiningGame" color="success" @click="join">Join</v-btn>
           <v-btn v-if="inGame && game.link != null && !copyTooltip" color="accent" @click="copyLink">Copy Game Link</v-btn>
           <v-btn color="primary" v-if="copyTooltip"> Copied to clipboard! </v-btn>
           <v-spacer></v-spacer>
@@ -64,11 +64,19 @@ import gameHelper from '../databaseHelpers/games';
 import copy from 'copy-to-clipboard';
 
 const join = function join() {
+  var self = this;
   if (!this.loggedIn) {
     this.$store.commit('togglePending');
     return;
   }
-  return gameHelper.addUserToGame(this.$store, firebase.db.collection('games').doc(this.gameId));
+  this.joiningGame = true;
+  const openLink = this.selfIsOwner ? null : window.open('/#/loading', '_blank');
+  return gameHelper.addUserToGame(this.$store, firebase.db.collection('games').doc(this.gameId))
+    .then(() => {
+    self.joiningGame = false;
+    if (openLink == null) return;
+    openLink.location = self.formattedLink
+  });
 };
 
 const copyLink = function copyLink() {
@@ -128,6 +136,7 @@ export default {
       gameListener: null,
       playerListener: null,
       copyTooltip: false,
+      joiningGame: false,
     };
   },
   methods: {
@@ -161,6 +170,11 @@ export default {
       if (this.game == null) return false;
       return this.$store.state.user.userId == this.game.owner;
     },
+    formattedLink() {
+      if (this.game == null) return '';
+      if (this.game.link.startsWith('http')) return this.game.link;
+      return `https://${this.game.link}`
+    }
   },
   watch: {
     gameId(newVal, oldVal) {
