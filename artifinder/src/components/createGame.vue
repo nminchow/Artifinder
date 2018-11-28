@@ -18,12 +18,18 @@
               :error-messages="errors.collect('name')"
             ></v-text-field>
             <v-text-field
-              label="Join Link"
+              label="Tournament Invite Link"
               v-model="link"
               data-vv-name="link"
               v-validate="'required|url'"
               :error-messages="errors.collect('link')"
-            ></v-text-field>
+            >
+              <v-tooltip max-width="150" slot="append-outer" bottom>
+                <v-icon slot="activator">help</v-icon>
+                <span>To allow other players to join, create a tournament and use the "Create Open Invite"
+                   option, then paste the link here.</span>
+              </v-tooltip>
+            </v-text-field>
             <v-select
               :items="types"
               label="Type"
