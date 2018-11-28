@@ -14,7 +14,6 @@ const initialUserState = {
 export default new Vuex.Store({
   state: {
     user: initialUserState,
-    previewGame: null,
   },
   mutations: {
     login(state, payload) {
@@ -33,8 +32,7 @@ export default new Vuex.Store({
     setCreating: (state, payload) => state.user.creatingGame = payload.creatingGame,
     setGame: (state, payload) => {
       state.user.currentGame = payload.currentGame;
-    },
-    setPreview: (state, payload) => state.previewGame = payload.previewGame,
+    }
   },
   actions: {
 

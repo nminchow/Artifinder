@@ -3,6 +3,7 @@ import Vuetify from 'vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import { sync } from 'vuex-router-sync'
 import VeeValidate from 'vee-validate';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
@@ -16,6 +17,8 @@ library.add(faDiscord, faGithub)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false;
+
+sync(store, router);
 
 Vue.use(VeeValidate);
 Vue.use(Vuetify, {

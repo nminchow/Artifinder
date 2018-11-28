@@ -8,14 +8,14 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'gameList',
-      component: gameList,
-    },
-    {
       path: '/loading',
       name: 'loading',
       component: loading,
+    },
+    {
+      path: '/:id?',
+      name: 'gameList',
+      component: gameList,
     },
   ],
 });

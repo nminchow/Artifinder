@@ -47,7 +47,7 @@
         </v-flex>
         <v-flex xs12 sm6>
           <v-card>
-            <game :gameId="previewGame || gameId"/>
+            <game :gameId="previewGame"/>
           </v-card>
         </v-flex>
       </v-layout>
@@ -75,10 +75,7 @@ const addItem = function addItem() {
 };
 
 const preview = function preview(Id) {
-  this.$store.commit({
-    type: 'setPreview',
-    previewGame: Id,
-  });
+  this.$router.push({ path: `/${Id}` })
   if(this.$vuetify.breakpoint.xs)
   {
     window.scrollTo(0, document.body.scrollHeight);
@@ -109,7 +106,7 @@ export default {
       db: null,
       gamesListener: null,
       filters: ['all', 'draft', 'constructed'],
-      filter: 'all'
+      filter: 'all',
     };
   },
   components: {
@@ -124,7 +121,7 @@ export default {
   watch: {
     filter(newVal, oldVal) {
       this.setListener(newVal);
-    }
+    },
   },
   mounted() {
     this.setListener(this.filter);
@@ -133,11 +130,8 @@ export default {
     loggedIn() {
       return this.$store.state.user.name != null;
     },
-    gameId() {
-      return this.$store.state.user.currentGame;
-    },
     previewGame() {
-      return this.$store.state.previewGame;
+      return this.$store.state.route.params.id;
     },
   },
 };

@@ -4,7 +4,7 @@
       <v-toolbar app fixed clipped-left>
         <v-toolbar-title>Artifinder</v-toolbar-title>
         <v-spacer></v-spacer>
-        <Login/>
+        <login/>
         <v-toolbar-items>
           <v-menu offset-y>
             <v-btn slot="activator" flat>{{ name }}</v-btn>
@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import Login from './components/login.vue';
+import login from './components/login.vue';
 import firebase from './firebase';
 
 export default {
   components: {
-    Login,
+    login,
   },
   computed: {
     name() {

@@ -83,7 +83,10 @@ const createGame = function createGame() {
           owner: this.$store.state.user.userId,
           link: this.link,
           type: this.type,
-        }).then(docRef => gameHelper.addUserToGame(this.$store, docRef)).then(() => {
+        }).then(docRef => {
+          gameHelper.addUserToGame(this.$store, docRef);
+          this.$router.push({ path: `/${docRef.id}` })
+        }).then(() => {
           this.setCreating(false);
           this.creating = false;
         })

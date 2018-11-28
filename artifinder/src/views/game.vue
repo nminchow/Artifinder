@@ -86,10 +86,7 @@ const copyLink = function copyLink() {
 }
 
 const backToCurrent = function join() {
-  this.$store.commit({
-    type: 'setPreview',
-    previewGame: null,
-  });
+  this.$router.push({ path: `/${this.$store.state.user.currentGame}` })
 };
 
 const deleteGame = function deleteGame() {
@@ -177,33 +174,36 @@ export default {
     }
   },
   watch: {
-    gameId(newVal, oldVal) {
-      const self = this;
-      // unsubscribe from old
-      if (oldVal != null) {
-        this.gameListener();
-        this.playerListener();
-        self.players = [];
-      }
-      // escape if cleared
-      if (newVal == null) {
-        this.game = null;
-        return;
-      }
-      // subscribe to new
-      this.gameListener = firebase.db.collection('games').doc(newVal)
-        .onSnapshot((document) => {
-          if(!document.exists) return;
-          this.game = { ...document.data(), id: document.id };
-        });
-      this.playerListener = firebase.db.collection('games').doc(newVal)
-        .collection('members').onSnapshot((querySnapshot) => {
+    gameId: {
+      immediate: true,
+      handler(newVal, oldVal) {
+        const self = this;
+        // unsubscribe from old
+        if (oldVal != null) {
+          this.gameListener();
+          this.playerListener();
+          self.players = [];
+        }
+        // escape if cleared
+        if (newVal == null) {
+          this.game = null;
+          return;
+        }
+        // subscribe to new
+        this.gameListener = firebase.db.collection('games').doc(newVal)
+          .onSnapshot((document) => {
+            if(!document.exists) return;
+            this.game = { ...document.data(), id: document.id };
+          });
+        this.playerListener = firebase.db.collection('games').doc(newVal)
+          .collection('members').onSnapshot((querySnapshot) => {
           self.players = [];
           querySnapshot.forEach((doc) => {
           // if (doc.metadata.hasPendingWrites) return;
             self.players.push({ ...doc.data(), id: doc.id });
           });
         });
+      }
     },
   },
 };

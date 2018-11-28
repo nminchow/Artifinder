@@ -26,10 +26,6 @@ export default class games {
         type: 'setGame',
         currentGame: docRef.id,
       }))
-      .then(() => store.commit({
-        type: 'setPreview',
-        currentGame: null,
-      }))
       .catch((error) => {
         console.error('Error adding document: ', error);
       });

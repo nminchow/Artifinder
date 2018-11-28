@@ -90,6 +90,8 @@ export default {
               currentGame: data.currentGame,
               userId: user.uid,
             });
+            if (self.$store.state.route.params.id || self.$store.state.route.path.endsWith('loading')) return;
+            self.$router.push({ path: `/${data.currentGame  || ''}` })
           })
           this.loggingIn = false
         });
