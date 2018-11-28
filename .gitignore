@@ -1,3 +1,4 @@
 artifinder/node_modules/*
 artifinder/dist/*
 .firebase/*
+artifinder/dist/index.html
