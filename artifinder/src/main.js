@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import customValidators from './customValidators'
 
 import 'vuetify/dist/vuetify.min.css';
 
@@ -17,6 +18,8 @@ library.add(faDiscord, faGithub)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false;
+
+customValidators(VeeValidate);
 
 sync(store, router);
 

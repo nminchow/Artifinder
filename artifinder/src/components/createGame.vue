@@ -21,7 +21,7 @@
               label="Tournament Invite Link"
               v-model="link"
               data-vv-name="link"
-              v-validate="'required|url'"
+              v-validate="'required|url|tourament_link'"
               :error-messages="errors.collect('link')"
             >
               <v-tooltip max-width="150" slot="append-outer" bottom>
