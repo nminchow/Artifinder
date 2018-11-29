@@ -8,9 +8,12 @@ import store from './store';
 class FireBase {
   constructor() {
     firebase.initializeApp({
-      apiKey: 'AIzaSyBEkwobHbPAQ2Yya6VNY1BNsLFg1wR0g_w',
-      authDomain: 'artifinder-191f7.firebaseapp.com',
-      projectId: 'artifinder-191f7',
+      apiKey: "AIzaSyB85GPMq_gH-1rsb1KOYsknzgiYETYRROU",
+      authDomain: "artifinder-test.firebaseapp.com",
+      databaseURL: "https://artifinder-test.firebaseio.com",
+      projectId: "artifinder-test",
+      storageBucket: "artifinder-test.appspot.com",
+      messagingSenderId: "922494783036"
     });
     this.db = firebase.firestore();
     this.db.settings({

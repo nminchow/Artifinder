@@ -26,23 +26,7 @@
                 </v-container>
               </v-form>
             </v-card-actions>
-            <v-list dense two-line>
-              <span v-for="(game, key) in games" :key="game.created.seconds + (game.created.nanoseconds/10000000)">
-                <v-divider></v-divider>
-                <v-list-tile
-                  ripple
-                  @click="preview(game.id)"
-                >
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ game.description }}</v-list-tile-title>
-                    <v-list-tile-sub-title>
-                      {{ game.currentPlayers }}/{{ game.playerLimit }}
-                      - {{ game.type }}
-                    </v-list-tile-sub-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-              </span>
-            </v-list>
+            <gameTable :games="games" />
           </v-card>
         </v-flex>
         <v-flex xs12 sm6>
@@ -61,7 +45,7 @@ import firebase from '../firebase';
 import gameHelper from '../databaseHelpers/games';
 import game from './game';
 import createGame from '../components/createGame';
-
+import gameTable from '../components/gameTable';
 
 const addItem = function addItem() {
   if (!this.loggedIn) {
@@ -72,14 +56,6 @@ const addItem = function addItem() {
     type: 'setCreating',
     creatingGame: true,
   });
-};
-
-const preview = function preview(Id) {
-  this.$router.push({ path: `/${Id}` })
-  if(this.$vuetify.breakpoint.xs)
-  {
-    window.scrollTo(0, document.body.scrollHeight);
-  }
 };
 
 const setListener = function setListener(newVal) {
@@ -112,10 +88,10 @@ export default {
   components: {
     game,
     createGame,
+    gameTable,
   },
   methods: {
     addItem,
-    preview,
     setListener,
   },
   watch: {
