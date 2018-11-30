@@ -14,7 +14,7 @@
               label="Name"
               v-model="name"
               data-vv-name="name"
-              v-validate="'required|min:5'"
+              v-validate="'required|min:5|max:256'"
               :error-messages="errors.collect('name')"
             ></v-text-field>
             <v-text-field
@@ -38,8 +38,16 @@
             <v-select
               :items="sizes"
               label="Size"
-              v-model="size"
+              v-model="selectedSize"
             ></v-select>
+            <v-text-field
+              v-if="usingCustomSize"
+              label="Custom Size"
+              v-model="customSize"
+              data-vv-name="size"
+              v-validate="'between:1,2048'"
+              :error-messages="errors.collect('size')"
+            ></v-text-field>
           </v-layout>
         </v-container>
       </v-form>
@@ -101,8 +109,9 @@ export default {
     return {
       name: '',
       link: '',
-      sizes: [4, 8, 16, 32, 64],
-      size: 4,
+      sizes: [4, 8, 16, 32, 64, 'custom'],
+      selectedSize: 4,
+      customSize: 0,
       types: ['draft', 'constructed'],
       type: 'draft',
       creating: false,
@@ -116,6 +125,13 @@ export default {
     creatingGame() {
       return this.$store.state.user.creatingGame;
     },
+    size() {
+      if(this.usingCustomSize) return this.customSize;
+      return this.selectedSize;
+    },
+    usingCustomSize() {
+      return this.selectedSize === 'custom';
+    }
   },
 };
 </script>
