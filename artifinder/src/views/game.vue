@@ -18,8 +18,18 @@
         </v-card-title>
         <v-card-actions>
           <v-btn v-if="joinable" :disabled="joiningGame" color="success" @click="join">Join</v-btn>
-          <v-btn v-if="inGame && game.link != null && !copyTooltip" color="accent" @click="copyLink">Copy Game Link</v-btn>
-          <v-btn color="primary" v-if="copyTooltip"> Copied to clipboard! </v-btn>
+          <v-btn
+            v-if="inGame && game.link != null && !copyGameTooltip"
+            color="accent"
+            @click="copyGameLink"
+          >In-Game Link</v-btn>
+          <v-btn color="primary" v-if="copyGameTooltip"> Copied to clipboard! </v-btn>
+          <v-btn
+            v-if="inGame && game.link != null && !copyFinderTooltip"
+            color="secondary"
+            @click="copyFinderLink"
+          >Artifinder Link</v-btn>
+          <v-btn color="primary" v-if="copyFinderTooltip"> Copied to clipboard! </v-btn>
           <v-spacer></v-spacer>
           <v-btn fab small color="red" flat v-if="selfIsOwner" @click="deleteGame"><v-icon>delete_forever</v-icon></v-btn>
         </v-card-actions>
@@ -79,10 +89,16 @@ const join = function join() {
   });
 };
 
-const copyLink = function copyLink() {
-  this.copyTooltip = true;
+const copyGameLink = function copyGameLink() {
+  this.copyGameTooltip = true;
   copy(this.game.link);
-  setTimeout(() => { this.copyTooltip = false; }, 2000);
+  setTimeout(() => { this.copyGameTooltip = false; }, 2000);
+}
+
+const copyFinderLink = function copyFinderLink() {
+  this.copyFinderTooltip = true;
+  copy(window.location.toString());
+  setTimeout(() => { this.copyFinderTooltip = false; }, 2000);
 }
 
 const backToCurrent = function join() {
@@ -132,14 +148,16 @@ export default {
       players: [],
       gameListener: null,
       playerListener: null,
-      copyTooltip: false,
+      copyGameTooltip: false,
+      copyFinderTooltip: false,
       joiningGame: false,
     };
   },
   methods: {
     join,
     backToCurrent,
-    copyLink,
+    copyGameLink,
+    copyFinderLink,
     deleteGame,
     userIsOwner,
     isSelf,
@@ -171,7 +189,7 @@ export default {
       if (this.game == null) return '';
       if (this.game.link.startsWith('http')) return this.game.link;
       return `https://${this.game.link}`
-    }
+    },
   },
   watch: {
     gameId: {

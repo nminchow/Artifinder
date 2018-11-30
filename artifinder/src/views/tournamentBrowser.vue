@@ -5,7 +5,7 @@
       grid-list-md
     >
       <v-layout row wrap>
-        <v-flex xs12 sm6>
+        <v-flex sm12 md6>
           <v-card>
             <v-toolbar color="secondary">
               <v-toolbar-title class="white--text">Tournaments</v-toolbar-title>
@@ -29,7 +29,7 @@
             <gameTable :games="games" />
           </v-card>
         </v-flex>
-        <v-flex xs12 sm6>
+        <v-flex sm12 md6>
           <v-card>
             <game :gameId="previewGame"/>
           </v-card>
