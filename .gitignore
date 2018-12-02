@@ -2,3 +2,5 @@ artifinder/node_modules/*
 artifinder/dist/*
 .firebase/*
 artifinder/dist/index.html
+functions/node_modules/*
+firebase-debug.log

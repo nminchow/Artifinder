@@ -80,7 +80,7 @@ const join = function join() {
     return;
   }
   this.joiningGame = true;
-  const openLink = this.selfIsOwner ? null : window.open('/#/loading', '_blank');
+  const openLink = this.selfIsOwner ? null : window.open('/loading', '_blank');
   return gameHelper.addUserToGame(this.$store, firebase.db.collection('games').doc(this.gameId))
     .then(() => {
     self.joiningGame = false;
@@ -190,6 +190,12 @@ export default {
       if (this.game.link.startsWith('http')) return this.game.link;
       return `https://${this.game.link}`
     },
+  },
+  mounted() {
+    // transform ?gameId=asdf into /asdf
+    if(this.$route.query.gameId) {
+      this.$router.push({ path: `/${this.$route.query.gameId}` });
+    }
   },
   watch: {
     gameId: {
