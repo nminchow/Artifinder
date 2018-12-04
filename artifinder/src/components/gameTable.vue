@@ -13,7 +13,9 @@
         </v-list-tile-sub-title>
       </v-list-tile-content>
       <v-list-tile-action>
-      <v-list-tile-action-text> {{ game.currentPlayers }}/{{ game.playerLimit }} </v-list-tile-action-text>
+      <v-list-tile-action-text>
+         {{ game.currentPlayers }}/{{ game.playerLimit }}
+      </v-list-tile-action-text>
       </v-list-tile-action>
     </v-list-tile>
   </span>
@@ -23,23 +25,21 @@
 import timeago from 'epoch-timeago';
 
 const preview = function preview(Id) {
-  this.$router.push({ path: `/${Id}` })
-  if(this.$vuetify.breakpoint.xs)
-  {
+  this.$router.push({ path: `/${Id}` });
+  if (this.$vuetify.breakpoint.xs) {
     window.scrollTo(0, document.body.scrollHeight);
   }
 };
 
 const timeAgo = function timeAgo(milliseconds) {
   return timeago(milliseconds);
-}
+};
 
 export default {
   props: ['games'],
   methods: {
     preview,
     timeAgo,
-  }
-}
+  },
+};
 </script>
-

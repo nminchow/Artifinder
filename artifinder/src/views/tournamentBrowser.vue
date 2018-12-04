@@ -42,10 +42,9 @@
 <script>
 // @ is an alias to /src
 import firebase from '../firebase';
-import gameHelper from '../databaseHelpers/games';
-import game from './game';
-import createGame from '../components/createGame';
-import gameTable from '../components/gameTable';
+import game from './game.vue';
+import createGame from '../components/createGame.vue';
+import gameTable from '../components/gameTable.vue';
 
 const addItem = function addItem() {
   if (!this.loggedIn) {
@@ -62,7 +61,7 @@ const setListener = function setListener(newVal) {
   const self = this;
   if (this.gamesListener != null) this.gamesListener();
   let query = firebase.db.collection('games').orderBy('created', 'desc').limit(10);
-  if (newVal != 'all') {
+  if (newVal !== 'all') {
     query = query.where('type', '==', newVal);
   }
   this.gamesListener = query.onSnapshot((querySnapshot) => {
@@ -95,7 +94,7 @@ export default {
     setListener,
   },
   watch: {
-    filter(newVal, oldVal) {
+    filter(newVal) {
       this.setListener(newVal);
     },
   },

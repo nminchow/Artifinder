@@ -31,7 +31,16 @@
           >Artifinder Link</v-btn>
           <v-btn color="primary" v-if="copyFinderTooltip"> Copied to clipboard! </v-btn>
           <v-spacer></v-spacer>
-          <v-btn fab small color="red" flat v-if="selfIsOwner" @click="deleteGame"><v-icon>delete_forever</v-icon></v-btn>
+          <v-btn
+            fab
+            small
+            color="red"
+            flat
+            v-if="selfIsOwner"
+            @click="deleteGame"
+          >
+            <v-icon>delete_forever</v-icon>
+          </v-btn>
         </v-card-actions>
         <v-list dense>
           <v-subheader>
@@ -69,76 +78,78 @@
 </template>
 
 <script>
+import copy from 'copy-to-clipboard';
 import firebase from '../firebase';
 import gameHelper from '../databaseHelpers/games';
-import copy from 'copy-to-clipboard';
 
 const join = function join() {
-  var self = this;
+  const self = this;
   if (!this.loggedIn) {
     this.$store.commit('togglePending');
     return;
   }
   this.joiningGame = true;
   const openLink = this.selfIsOwner ? null : window.open('/loading', '_blank');
-  return gameHelper.addUserToGame(this.$store, firebase.db.collection('games').doc(this.gameId))
+  gameHelper.addUserToGame(this.$store, firebase.db.collection('games').doc(this.gameId))
     .then(() => {
-    self.joiningGame = false;
-    if (openLink == null) return;
-    openLink.location = self.formattedLink
-  });
+      self.joiningGame = false;
+      if (openLink == null) return;
+      openLink.location = self.formattedLink;
+    });
 };
 
 const copyGameLink = function copyGameLink() {
   this.copyGameTooltip = true;
   copy(this.game.link);
   setTimeout(() => { this.copyGameTooltip = false; }, 2000);
-}
+};
 
 const copyFinderLink = function copyFinderLink() {
   this.copyFinderTooltip = true;
   copy(window.location.toString());
   setTimeout(() => { this.copyFinderTooltip = false; }, 2000);
-}
+};
 
-const backToCurrent = function join() {
-  this.$router.push({ path: `/${this.$store.state.user.currentGame}` })
+const backToCurrent = function backToCurrent() {
+  this.$router.push({ path: `/${this.$store.state.user.currentGame}` });
 };
 
 const deleteGame = function deleteGame() {
   // stash this so we don't lose it
-  const gameId = this.gameId;
-  var self = this;
-  let players = [];
+  const { gameId } = this;
+  const self = this;
+  const players = [];
   firebase.db.collection('games').doc(gameId)
-        .collection('members').get().then((ref) => {
-    ref.forEach((doc) => {
-      players.push(gameHelper.removeUserGameRef(doc.id).then(() => {
-        gameHelper.removeGameMember(doc.id, gameId);
-      }));
-    });
-  }).then(() => {
-    Promise.all(players).then(() => {
-      firebase.db.collection('games').doc(gameId).delete().then(() => {
-        self.game = null;
+    .collection('members').get()
+    .then((ref) => {
+      ref.forEach((doc) => {
+        players.push(gameHelper.removeUserGameRef(doc.id).then(() => {
+          gameHelper.removeGameMember(doc.id, gameId);
+        }));
+      });
+    })
+    .then(() => {
+      Promise.all(players).then(() => {
+        firebase.db.collection('games').doc(gameId).delete().then(() => {
+          self.game = null;
+        });
       });
     });
-  });
-}
+};
 
 const userIsOwner = function usersIsOwner(player) {
-  return player.id == this.game.owner;
+  return player.id === this.game.owner;
 };
 
 const isSelf = function isSelf(player) {
-  return player.id == this.$store.state.user.userId;
-}
+  return player.id === this.$store.state.user.userId;
+};
 
 const removePlayer = function removePlayer(player) {
   gameHelper.removeFromGame(player.id, this.game.id).then(() => {
     gameHelper.removeUserGameRef(player.id);
-  })
-}
+  });
+};
 
 export default {
   props: ['gameId'],
@@ -166,34 +177,34 @@ export default {
   computed: {
     joinable() {
       if (this.game == null) return false;
-      return this.$store.state.user.currentGame != this.gameId
+      return this.$store.state.user.currentGame !== this.gameId
       && this.game.currentPlayers < this.game.playerLimit;
     },
     showBackLink() {
       if (this.$store.state.user.currentGame == null) return false;
-      return this.$store.state.user.currentGame != this.gameId;
+      return this.$store.state.user.currentGame !== this.gameId;
     },
     inGame() {
       const self = this;
       if (this.game == null) return false;
-      return !this.joinable && this.players.some(user => user.id == self.$store.state.user.userId);
+      return !this.joinable && this.players.some(user => user.id === self.$store.state.user.userId);
     },
     loggedIn() {
       return this.$store.state.user.name != null;
     },
     selfIsOwner() {
       if (this.game == null) return false;
-      return this.$store.state.user.userId == this.game.owner;
+      return this.$store.state.user.userId === this.game.owner;
     },
     formattedLink() {
       if (this.game == null) return '';
       if (this.game.link.startsWith('http')) return this.game.link;
-      return `https://${this.game.link}`
+      return `https://${this.game.link}`;
     },
   },
   mounted() {
     // transform ?gameId=asdf into /asdf
-    if(this.$route.query.gameId) {
+    if (this.$route.query.gameId) {
       this.$router.push({ path: `/${this.$route.query.gameId}` });
     }
   },
@@ -216,18 +227,18 @@ export default {
         // subscribe to new
         this.gameListener = firebase.db.collection('games').doc(newVal)
           .onSnapshot((document) => {
-            if(!document.exists) return;
+            if (!document.exists) return;
             this.game = { ...document.data(), id: document.id };
           });
         this.playerListener = firebase.db.collection('games').doc(newVal)
           .collection('members').onSnapshot((querySnapshot) => {
-          self.players = [];
-          querySnapshot.forEach((doc) => {
-          // if (doc.metadata.hasPendingWrites) return;
-            self.players.push({ ...doc.data(), id: doc.id });
+            self.players = [];
+            querySnapshot.forEach((doc) => {
+              // if (doc.metadata.hasPendingWrites) return;
+              self.players.push({ ...doc.data(), id: doc.id });
+            });
           });
-        });
-      }
+      },
     },
   },
 };

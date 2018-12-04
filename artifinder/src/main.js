@@ -1,21 +1,20 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-import { sync } from 'vuex-router-sync'
+import { sync } from 'vuex-router-sync';
 import VeeValidate from 'vee-validate';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faDiscord } from '@fortawesome/free-brands-svg-icons'
-import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import customValidators from './customValidators'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faDiscord, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import store from './store';
+import router from './router';
+import App from './App.vue';
+import customValidators from './customValidators';
 
 import 'vuetify/dist/vuetify.min.css';
 
-library.add(faDiscord, faGithub)
+library.add(faDiscord, faGithub);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 

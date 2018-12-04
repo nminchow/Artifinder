@@ -2,7 +2,8 @@
   <v-dialog max-width="290" :value="pendingLogin" @input="setPending">
      <v-card>
        <v-card-text>
-         Please select a username. Your Steam ID is recomended so other users know who you are in-game.
+         Please select a username. Your Steam ID is recomended so other users know who you are
+         in-game.
         </v-card-text>
        <v-form>
         <v-container>
@@ -37,15 +38,10 @@ import firebase from '../firebase';
 
 const login = function login() {
   this.$validator.validateAll().then((result) => {
-    if(!result) return;
+    if (!result) return;
     this.loggingIn = true;
     firebase.instance.auth().signInAnonymously().then(() => {
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ...
-    });
+    }).catch(() => {});
   });
 };
 
@@ -66,7 +62,7 @@ const createIfNeeded = function createIfNeeded(user) {
 const setPending = function setPending(value) {
   this.$store.commit({
     type: 'setPending',
-    pending: value == true,
+    pending: value === true,
   });
 };
 
@@ -91,9 +87,9 @@ export default {
               userId: user.uid,
             });
             if (self.$store.state.route.params.id || self.$store.state.route.path.endsWith('loading')) return;
-            self.$router.push({ path: `/${data.currentGame  || ''}` })
-          })
-          this.loggingIn = false
+            self.$router.push({ path: `/${data.currentGame || ''}` });
+          });
+          this.loggingIn = false;
         });
       } else {
         self.$store.commit('logout');

@@ -26,8 +26,10 @@
             >
               <v-tooltip max-width="150" slot="append-outer" bottom>
                 <v-icon slot="activator">help</v-icon>
-                <span>To allow other players to join, create a tournament and use the "Create Open Invite"
-                   option, then paste the link here.</span>
+                <span>
+                  To allow other players to join, create a tournament and use the "Create Open
+                  Invite" option, then paste the link here.
+                </span>
               </v-tooltip>
             </v-text-field>
             <v-select
@@ -74,7 +76,7 @@ import gameHelper from '../databaseHelpers/games';
 const setCreating = function setCreating(value) {
   this.$store.commit({
     type: 'setCreating',
-    creatingGame: value == true,
+    creatingGame: value === true,
   });
 };
 
@@ -82,24 +84,24 @@ const setCreating = function setCreating(value) {
 const createGame = function createGame() {
   this.$validator.validateAll().then((result) => {
     if (result) {
-        this.creating = true;
-        firebase.db.collection('games').add({
-          description: this.name,
-          playerLimit: this.size,
-          currentPlayers: 0,
-          created: firebase.instance.firestore.FieldValue.serverTimestamp(),
-          owner: this.$store.state.user.userId,
-          link: this.link,
-          type: this.type,
-        }).then(docRef => {
-          gameHelper.addUserToGame(this.$store, docRef);
-          this.$router.push({ path: `/${docRef.id}` })
-        }).then(() => {
-          this.setCreating(false);
-          this.creating = false;
-        })
+      this.creating = true;
+      firebase.db.collection('games').add({
+        description: this.name,
+        playerLimit: this.size,
+        currentPlayers: 0,
+        created: firebase.instance.firestore.FieldValue.serverTimestamp(),
+        owner: this.$store.state.user.userId,
+        link: this.link,
+        type: this.type,
+      }).then((docRef) => {
+        gameHelper.addUserToGame(this.$store, docRef);
+        this.$router.push({ path: `/${docRef.id}` });
+      }).then(() => {
+        this.setCreating(false);
+        this.creating = false;
+      })
         .catch(() => {
-      });
+        });
     }
   });
 };
@@ -126,12 +128,12 @@ export default {
       return this.$store.state.user.creatingGame;
     },
     size() {
-      if(this.usingCustomSize) return this.customSize;
+      if (this.usingCustomSize) return this.customSize;
       return this.selectedSize;
     },
     usingCustomSize() {
       return this.selectedSize === 'custom';
-    }
+    },
   },
 };
 </script>

@@ -11,6 +11,7 @@ const initialUserState = {
   currentGame: null,
 };
 
+/* eslint-disable no-param-reassign */
 export default new Vuex.Store({
   state: {
     user: initialUserState,
@@ -27,14 +28,12 @@ export default new Vuex.Store({
       state.user.userId = null;
       state.user.currentGame = null;
     },
-    togglePending: state => state.user.pendingLogin = true,
-    setPending: (state, payload) => state.user.pendingLogin = payload.pending,
-    setCreating: (state, payload) => state.user.creatingGame = payload.creatingGame,
+    togglePending: (state) => { state.user.pendingLogin = true; },
+    setPending: (state, payload) => { state.user.pendingLogin = payload.pending; },
+    setCreating: (state, payload) => { state.user.creatingGame = payload.creatingGame; },
     setGame: (state, payload) => {
       state.user.currentGame = payload.currentGame;
-    }
-  },
-  actions: {
-
+    },
   },
 });
+/* eslint-enable no-param-reassign */

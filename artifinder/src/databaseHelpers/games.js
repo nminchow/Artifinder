@@ -1,5 +1,6 @@
 import firebase from '../firebase';
 
+/* eslint-disable no-console */
 export default class games {
   static addUserToGame(store, docRef) {
     // add to member collection
@@ -13,7 +14,7 @@ export default class games {
         }
         const players = sfDoc.data().currentPlayers + 1;
         transaction.update(docRef, { currentPlayers: players });
-      })).catch((error) => {});
+      })).catch(() => {});
     })
       .then(() => {
         if (store.state.user.currentGame == null) return Promise.resolve();
@@ -39,27 +40,27 @@ export default class games {
       }
       const players = sfDoc.data().currentPlayers - 1;
       transaction.update(doc, { currentPlayers: players });
-    })).catch((error) => {
-      console.log('error decrementing')
-    }).then(() => {
-      return this.removeGameMember(playerId, gameId);
-    });
+    })).catch(() => {
+      console.log('error decrementing');
+    }).then(() => this.removeGameMember(playerId, gameId));
   }
 
   static removeGameMember(playerId, gameId) {
     return firebase.db.collection('games')
       .doc(gameId)
       .collection('members').doc(playerId)
-      .delete().catch((error) => {
-        console.log('error removing')
-    });
+      .delete()
+      .catch(() => {
+        console.log('error removing');
+      });
   }
 
   static removeUserGameRef(playerId) {
     return firebase.db.collection('userData').doc(playerId).update({
       currentGame: null,
-    }).catch((error) => {
-      console.log('error remoing ref')
-    })
+    }).catch(() => {
+      console.log('error remoing ref');
+    });
   }
 }
+/* eslint-enable no-console */
