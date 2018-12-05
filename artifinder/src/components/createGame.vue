@@ -38,6 +38,20 @@
               v-model="type"
             ></v-select>
             <v-select
+              :items="formats"
+              label="Format"
+              v-model="format"
+            ></v-select>
+            <v-select
+              :disabled="format === 'advanced/other'"
+              :items="seriesTypes"
+              label="Series"
+              data-vv-name="series"
+              v-validate="'required'"
+              v-model="series"
+              :error-messages="errors.collect('series')"
+            ></v-select>
+            <v-select
               :items="sizes"
               label="Size"
               v-model="selectedSize"
@@ -93,6 +107,8 @@ const createGame = function createGame() {
         owner: this.$store.state.user.userId,
         link: this.link,
         type: this.type,
+        format: this.format,
+        series: this.series,
       }).then((docRef) => {
         gameHelper.addUserToGame(this.$store, docRef);
         this.$router.push({ path: `/${docRef.id}` });
@@ -117,11 +133,21 @@ export default {
       types: ['draft', 'constructed'],
       type: 'draft',
       creating: false,
+      formats: ['bracket', 'swiss', 'advanced/other'],
+      format: 'swiss',
+      series: 'best of three',
     };
   },
   methods: {
     setCreating,
     createGame,
+  },
+  watch: {
+    format(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.series = null;
+      }
+    },
   },
   computed: {
     creatingGame() {
@@ -133,6 +159,24 @@ export default {
     },
     usingCustomSize() {
       return this.selectedSize === 'custom';
+    },
+    seriesTypes() {
+      switch (this.format) {
+        case 'bracket':
+          return ['best of one', 'best of three', 'best of five'];
+        case 'swiss':
+          return [
+            'best of one',
+            'single match w/draw',
+            'two matches w/draw',
+            'best of three',
+            'best of three w/draw',
+            'best of five',
+            'best of five w/draw',
+          ];
+        default:
+          return [];
+      }
     },
   },
 };

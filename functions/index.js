@@ -84,7 +84,7 @@ exports.createGame = functions.firestore
           },
           "fields": [
             {
-              "name": game.type,
+              "name": `${game.type} | ${game.format} | ${game.series}`,
               "value": `${game.playerLimit} Player`
             },
           ],
