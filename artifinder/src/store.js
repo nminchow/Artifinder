@@ -15,6 +15,10 @@ const initialUserState = {
 export default new Vuex.Store({
   state: {
     user: initialUserState,
+    error: {
+      show: false,
+      message: null,
+    },
   },
   mutations: {
     login(state, payload) {
@@ -27,6 +31,10 @@ export default new Vuex.Store({
       state.user.name = null;
       state.user.userId = null;
       state.user.currentGame = null;
+    },
+    setError: (state, message) => {
+      state.error.message = message;
+      state.error.show = message !== null;
     },
     togglePending: (state) => { state.user.pendingLogin = true; },
     setPending: (state, payload) => { state.user.pendingLogin = payload.pending; },

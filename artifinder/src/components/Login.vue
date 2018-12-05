@@ -41,7 +41,11 @@ const login = function login() {
     if (!result) return;
     this.loggingIn = true;
     firebase.instance.auth().signInAnonymously().then(() => {
-    }).catch(() => {});
+    }).catch((error) => {
+      this.$store.commit('setError', error.message);
+      this.setPending(false);
+      this.loggingIn = false;
+    });
   });
 };
 

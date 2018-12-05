@@ -5,7 +5,7 @@
         <v-toolbar-title>Artifinder</v-toolbar-title>
         <v-spacer></v-spacer>
         <login/>
-        <v-toolbar-items>
+        <v-toolbar-items v-if="$store.state.user.name != null">
           <v-menu offset-y>
             <v-btn slot="activator" flat>{{ name }}</v-btn>
             <v-list>
@@ -19,6 +19,13 @@
         </v-toolbar-items>
       </v-toolbar>
       <v-content>
+        <v-alert
+        v-model="alert"
+        dismissible
+        type="error"
+        >
+          {{ $store.state.error.message }}
+        </v-alert>
         <router-view/>
       </v-content>
       <v-footer dark height="auto" >
@@ -44,6 +51,16 @@ export default {
     login,
   },
   computed: {
+    alert: {
+      get: function () {
+        return this.$store.state.error.show;
+      },
+      set: function (newValue) {
+        if (!newValue) {
+          this.$store.commit('setError', null);
+        }
+      }
+    },
     name() {
       return this.$store.state.user.name;
     },

@@ -71,7 +71,6 @@ exports.createGame = functions.firestore
     const payload = {
       "username": "Artifinder",
       "avatar_url": "https://artifinder.com/artifinder.png",
-      "content": "New Tournament Posted on [Artifinder](https://artifinder.com)",
       "embeds": [
         {
           "thumbnail": {
