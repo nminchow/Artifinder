@@ -40,6 +40,7 @@ const login = function login() {
   this.$validator.validateAll().then((result) => {
     if (!result) return;
     this.loggingIn = true;
+    console.log('signing in');
     firebase.instance.auth().signInAnonymously().then(() => {
     }).catch((error) => {
       this.$store.commit('setError', error.message);
@@ -51,15 +52,17 @@ const login = function login() {
 
 const createIfNeeded = function createIfNeeded(user) {
   const userDataRef = firebase.db.collection('userData');
-
+  console.log('checking if created');
   // create default state if new
   if (this.pendingLogin) {
+    console.log('creating default');
     const defaultData = {
       name: this.name,
       currentGame: null,
     };
     return userDataRef.doc(user.uid).set(defaultData);
   }
+  console.log('returning promise');
   return Promise.resolve();
 };
 
@@ -80,9 +83,13 @@ export default {
   mounted() {
     const self = this;
     firebase.instance.auth().onAuthStateChanged((user) => {
+      console.log('user state set/changed');
       if (user) {
+        console.log('user created');
         self.createIfNeeded(user).then(() => {
+          console.log('local object created');
           firebase.db.collection('userData').doc(user.uid).onSnapshot((document) => {
+            console.log('in user snapshot');
             const data = document.data();
             self.$store.commit({
               type: 'login',
