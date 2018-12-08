@@ -2,19 +2,13 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import { sync } from 'vuex-router-sync';
 import VeeValidate from 'vee-validate';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faDiscord, faGithub, faRedditAlien, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import store from './store';
 import router from './router';
 import App from './App.vue';
 import customValidators from './customValidators';
+import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
 
 import 'vuetify/dist/vuetify.min.css';
-
-library.add(faDiscord, faGithub, faRedditAlien, faTwitter);
-
-Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
@@ -33,6 +27,7 @@ Vue.use(Vuetify, {
     info: '#2196f3',
     success: '#a59465',
   },
+  iconfont: 'fa'
 });
 
 new Vue({

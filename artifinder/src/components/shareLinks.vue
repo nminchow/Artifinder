@@ -1,17 +1,17 @@
 <template>
   <span>
-    <v-btn class="white--text" icon :href="redditUrl" target="_blank">
-      <font-awesome-icon :icon="['fab', 'reddit-alien']" size="2x" />
+    <v-btn icon :href="redditUrl" target="_blank">
+      <v-icon>fab fa-reddit-alien</v-icon>
     </v-btn>
-    <v-btn class="white--text" icon :href="twitterUrl" target="_blank">
-      <font-awesome-icon :icon="['fab', 'twitter']" size="2x" />
+    <v-btn icon :href="twitterUrl" target="_blank">
+      <v-icon>fab fa-twitter</v-icon>
     </v-btn>
-    <v-btn
-      v-if="!copyFinderTooltip"
-      color="secondary"
-      @click="copyFinderLink"
-    >Artifinder Link</v-btn>
-    <v-btn color="primary" v-if="copyFinderTooltip"> Copied to clipboard! </v-btn>
+    <v-tooltip right>
+      <v-btn slot="activator" icon @click="copyFinderLink">
+        <v-icon>link</v-icon>
+      </v-btn>
+      <span> {{ copyText }}</span>
+    </v-tooltip>
   </span>
 </template>
 <script>
@@ -20,9 +20,10 @@ import copy from 'copy-to-clipboard';
 
 const copyFinderLink = function copyFinderLink() {
   this.copyFinderTooltip = true;
-  copy(window.location.toString());
+  copy(this.url);
   setTimeout(() => { this.copyFinderTooltip = false; }, 2000);
 };
+
 
 export default {
   props: ['game'],
@@ -51,6 +52,9 @@ export default {
     formatAndSeries() {
       return game.formatAndSeries(this.game).replace('|', '-');
     },
+    copyText() {
+      return this.copyFinderTooltip ? 'Copied!' : 'Copy Tournament Link';
+    }
   }
 }
 </script>

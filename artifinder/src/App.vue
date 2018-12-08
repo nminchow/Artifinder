@@ -30,11 +30,11 @@
       </v-content>
       <v-footer dark height="auto" >
         <v-layout justify-center row wrap>
-          <v-btn class="white--text" icon href="https://discord.gg/7arjbp4" target="_blank">
-            <font-awesome-icon :icon="['fab', 'discord']" size="2x" />
+          <v-btn icon href="https://discord.gg/7arjbp4" target="_blank">
+            <v-icon>fab fa-discord</v-icon>
           </v-btn>
-          <v-btn class="white--text" icon href="https://github.com/nminchow/Artifinder" target="_blank">
-            <font-awesome-icon :icon="['fab', 'github']" size="2x" />
+          <v-btn icon href="https://github.com/nminchow/Artifinder" target="_blank">
+            <v-icon>fab fa-github</v-icon>
           </v-btn>
         </v-layout>
       </v-footer>
