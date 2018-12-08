@@ -17,10 +17,7 @@
             ></v-text-field>
             <span class="caption text--secondary font-weight-light pt-3">
               By setting a username, you agree to our (minimal)
-                <a target="_blank" href="/cookies!">
-                 cookie policy
-                </a>
-              .
+              <a target="_blank" href="/cookies!">cookie policy</a>.
             </span>
           </v-layout>
         </v-container>
