@@ -1,4 +1,4 @@
-export default class game {
+export default class gameFormatter {
   static formatAndSeries(game) {
     if (game.format === 'advanced/other' || !game.format) {
       return '';
@@ -15,4 +15,4 @@ export default class game {
       .replace('two matches', 'double')
       .replace(' w/draw', '*');
   }
-};
+}

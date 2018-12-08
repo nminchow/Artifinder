@@ -10,7 +10,9 @@
             <h3 class="headline mb-0">Cookies</h3>
           </v-card-title>
           <v-card-text>
-            We use cookies to improve your browsing experience on Artifinder, primarily to keep track of your username and current game. By browsing Artifinder, you consent to our use of cookies.
+            We use cookies to improve your browsing experience on Artifinder, primarily to keep
+            track of your username and current game. By browsing Artifinder, you consent to our use
+            of cookies.
           </v-card-text>
           <v-card-actions>
             <v-btn
@@ -30,8 +32,7 @@ export default {
   methods: {
     close() {
       window.close();
-    }
-  }
-}
+    },
+  },
+};
 </script>
-

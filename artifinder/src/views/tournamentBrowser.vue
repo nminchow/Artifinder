@@ -26,7 +26,11 @@
                 </v-container>
               </v-form>
             </v-card-actions>
-            <v-progress-linear v-if="games == null" :indeterminate="true" height="9"></v-progress-linear>
+            <v-progress-linear
+              v-if="games == null"
+              :indeterminate="true"
+              height="9"
+            ></v-progress-linear>
             <gameTable v-else :games="games" />
           </v-card>
         </v-flex>

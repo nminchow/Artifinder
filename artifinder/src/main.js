@@ -6,7 +6,7 @@ import store from './store';
 import router from './router';
 import App from './App.vue';
 import customValidators from './customValidators';
-import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
+import '@fortawesome/fontawesome-free/css/all.css'; // Ensure you are using css-loader
 
 import 'vuetify/dist/vuetify.min.css';
 
@@ -27,7 +27,7 @@ Vue.use(Vuetify, {
     info: '#2196f3',
     success: '#a59465',
   },
-  iconfont: 'fa'
+  iconfont: 'fa',
 });
 
 new Vue({

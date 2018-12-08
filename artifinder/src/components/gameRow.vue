@@ -21,7 +21,7 @@
 </template>
 <script>
 import timeago from 'epoch-timeago';
-import game from '../formatHelpers/game.js'
+import gameFormatter from '../formatHelpers/game';
 
 const preview = function preview() {
   this.$router.push({ path: `/${this.game.id}` });
@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     formatAndSeries() {
-      return game.formatAndSeries(this.game);
+      return gameFormatter.formatAndSeries(this.game);
     },
   },
 };

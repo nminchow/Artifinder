@@ -15,8 +15,8 @@
   </span>
 </template>
 <script>
-import game from '../formatHelpers/game.js'
 import copy from 'copy-to-clipboard';
+import gameFormatter from '../formatHelpers/game';
 
 const copyFinderLink = function copyFinderLink() {
   this.copyFinderTooltip = true;
@@ -30,32 +30,31 @@ export default {
   data() {
     return {
       copyFinderTooltip: false,
-    }
+    };
   },
   methods: {
     copyFinderLink,
   },
   computed: {
     redditUrl() {
-      return `http://www.reddit.com/submit?url=${this.url}&title=${this.title}`
+      return `http://www.reddit.com/submit?url=${this.url}&title=${this.title}`;
     },
     twitterUrl() {
-      const hashtags = 'Artifact'
-      return `https://twitter.com/intent/tweet?url=${this.url}&text=${this.title}&hashtags=${hashtags}`
+      const hashtags = 'Artifact';
+      return `https://twitter.com/intent/tweet?url=${this.url}&text=${this.title}&hashtags=${hashtags}`;
     },
     title() {
-      return `Join my Artifact tournament!  ${this.game.description} - ${this.game.type}${this.formatAndSeries}`
+      return `Join my Artifact tournament!  ${this.game.description} - ${this.game.type}${this.formatAndSeries}`;
     },
     url() {
       return `https://artifinder.com/${this.game.id}`;
     },
     formatAndSeries() {
-      return game.formatAndSeries(this.game).replace('|', '-');
+      return gameFormatter.formatAndSeries(this.game).replace('|', '-');
     },
     copyText() {
       return this.copyFinderTooltip ? 'Copied!' : 'Copy Tournament Link';
-    }
-  }
-}
+    },
+  },
+};
 </script>
-

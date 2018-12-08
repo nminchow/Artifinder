@@ -52,14 +52,14 @@ export default {
   },
   computed: {
     alert: {
-      get: function () {
+      get() {
         return this.$store.state.error.show;
       },
-      set: function (newValue) {
+      set(newValue) {
         if (!newValue) {
           this.$store.commit('setError', null);
         }
-      }
+      },
     },
     name() {
       return this.$store.state.user.name;

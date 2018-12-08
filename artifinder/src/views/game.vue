@@ -83,8 +83,8 @@
 import copy from 'copy-to-clipboard';
 import firebase from '../firebase';
 import gameHelper from '../databaseHelpers/games';
-import game from '../formatHelpers/game.js'
-import shareLinks from '../components/shareLinks.vue'
+import game from '../formatHelpers/game';
+import shareLinks from '../components/shareLinks.vue';
 
 const join = function join() {
   const self = this;
