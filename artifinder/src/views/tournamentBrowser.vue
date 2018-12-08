@@ -26,7 +26,8 @@
                 </v-container>
               </v-form>
             </v-card-actions>
-            <gameTable :games="games" />
+            <v-progress-linear v-if="games == null" :indeterminate="true" height="9"></v-progress-linear>
+            <gameTable v-else :games="games" />
           </v-card>
         </v-flex>
         <v-flex sm12 md6>
@@ -77,7 +78,7 @@ export default {
   name: 'home',
   data() {
     return {
-      games: [],
+      games: null,
       db: null,
       gamesListener: null,
       filters: ['all', 'draft', 'constructed'],

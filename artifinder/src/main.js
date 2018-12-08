@@ -3,7 +3,7 @@ import Vuetify from 'vuetify';
 import { sync } from 'vuex-router-sync';
 import VeeValidate from 'vee-validate';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faDiscord, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faDiscord, faGithub, faRedditAlien, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import store from './store';
 import router from './router';
@@ -12,7 +12,7 @@ import customValidators from './customValidators';
 
 import 'vuetify/dist/vuetify.min.css';
 
-library.add(faDiscord, faGithub);
+library.add(faDiscord, faGithub, faRedditAlien, faTwitter);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

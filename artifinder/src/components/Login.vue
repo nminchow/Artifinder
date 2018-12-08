@@ -6,7 +6,7 @@
          in-game.
         </v-card-text>
        <v-form>
-        <v-container>
+        <v-container grid-list-md>
           <v-layout row wrap>
             <v-text-field
               label="Username / Steam ID"
@@ -15,6 +15,9 @@
               v-model="name"
               :error-messages="errors.collect('name')"
             ></v-text-field>
+            <span class="caption text--secondary font-weight-light pt-3">
+              By setting a username, you agree to our (minimal) <a target="_blank" href="/cookies!"> cookie policy</a>.
+            </span>
           </v-layout>
         </v-container>
       </v-form>

@@ -12,7 +12,7 @@
             <div class="headline">{{ game.description }}</div>
             <div class="grey--text">
               {{ game.currentPlayers }}/{{ game.playerLimit }}
-              - {{ game.type }}
+              | {{ game.type }} {{ formatAndSeries }}
             </div>
           </div>
         </v-card-title>
@@ -24,12 +24,6 @@
             @click="copyGameLink"
           >In-Game Link</v-btn>
           <v-btn color="primary" v-if="copyGameTooltip"> Copied to clipboard! </v-btn>
-          <v-btn
-            v-if="inGame && game.link != null && !copyFinderTooltip"
-            color="secondary"
-            @click="copyFinderLink"
-          >Artifinder Link</v-btn>
-          <v-btn color="primary" v-if="copyFinderTooltip"> Copied to clipboard! </v-btn>
           <v-spacer></v-spacer>
           <v-btn
             fab
@@ -42,6 +36,14 @@
             <v-icon>delete_forever</v-icon>
           </v-btn>
         </v-card-actions>
+        <span v-if="inGame || selfIsOwner">
+          <v-card-text class="pb-0 mb-0">
+            Share
+          </v-card-text>
+          <v-card-actions>
+            <shareLinks :game="game" />
+          </v-card-actions>
+        </span>
         <v-list dense>
           <v-subheader>
             Players
@@ -81,6 +83,8 @@
 import copy from 'copy-to-clipboard';
 import firebase from '../firebase';
 import gameHelper from '../databaseHelpers/games';
+import game from '../formatHelpers/game.js'
+import shareLinks from '../components/shareLinks.vue'
 
 const join = function join() {
   const self = this;
@@ -102,12 +106,6 @@ const copyGameLink = function copyGameLink() {
   this.copyGameTooltip = true;
   copy(this.game.link);
   setTimeout(() => { this.copyGameTooltip = false; }, 2000);
-};
-
-const copyFinderLink = function copyFinderLink() {
-  this.copyFinderTooltip = true;
-  copy(window.location.toString());
-  setTimeout(() => { this.copyFinderTooltip = false; }, 2000);
 };
 
 const backToCurrent = function backToCurrent() {
@@ -160,15 +158,16 @@ export default {
       gameListener: null,
       playerListener: null,
       copyGameTooltip: false,
-      copyFinderTooltip: false,
       joiningGame: false,
     };
+  },
+  components: {
+    shareLinks,
   },
   methods: {
     join,
     backToCurrent,
     copyGameLink,
-    copyFinderLink,
     deleteGame,
     userIsOwner,
     isSelf,
@@ -200,6 +199,9 @@ export default {
       if (this.game == null) return '';
       if (this.game.link.startsWith('http')) return this.game.link;
       return `https://${this.game.link}`;
+    },
+    formatAndSeries() {
+      return game.formatAndSeries(this.game);
     },
   },
   mounted() {

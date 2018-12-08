@@ -21,6 +21,7 @@
 </template>
 <script>
 import timeago from 'epoch-timeago';
+import game from '../formatHelpers/game.js'
 
 const preview = function preview() {
   this.$router.push({ path: `/${this.game.id}` });
@@ -41,19 +42,7 @@ export default {
   },
   computed: {
     formatAndSeries() {
-      if (this.game.format === 'advanced/other' || !this.game.format) {
-        return '';
-      }
-      return ` | ${this.game.format} - ${this.shortFormSeries}`;
-    },
-    shortFormSeries() {
-      if (!this.game.series) return '';
-      return this.game.series.replace('best of one', 'Bo1')
-        .replace('best of three', 'Bo3')
-        .replace('best of five', 'Bo5')
-        .replace('single match', 'single')
-        .replace('two matches', 'double')
-        .replace(' w/draw', '*');
+      return game.formatAndSeries(this.game);
     },
   },
 };
