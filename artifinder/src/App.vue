@@ -6,9 +6,10 @@
         <v-spacer></v-spacer>
         <login/>
         <v-toolbar-items v-if="$store.state.user.name != null">
-          <v-menu offset-y>
-            <v-btn slot="activator" flat>{{ name }}</v-btn>
-            <v-list>
+          <v-menu bottom left offset-y>
+            <v-btn icon slot="activator" flat><v-icon>account_circle</v-icon></v-btn>
+            <v-list subheader>
+               <v-subheader>{{name}}</v-subheader>
               <v-list-tile
                 @click="logout"
               >
@@ -35,6 +36,9 @@
           </v-btn>
           <v-btn icon href="https://github.com/nminchow/Artifinder" target="_blank">
             <v-icon>fab fa-github</v-icon>
+          </v-btn>
+          <v-btn icon href="https://www.patreon.com/leonrdo" target="_blank">
+            <v-icon>fab fa-patreon</v-icon>
           </v-btn>
         </v-layout>
       </v-footer>
