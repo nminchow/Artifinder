@@ -5,6 +5,7 @@
         <v-toolbar-title>Artifinder</v-toolbar-title>
         <v-spacer></v-spacer>
         <login/>
+        <upgrading/>
         <v-toolbar-items v-if="$store.state.user.name != null">
           <v-menu bottom left offset-y>
             <v-btn icon slot="activator" flat><v-icon>account_circle</v-icon></v-btn>
@@ -14,6 +15,11 @@
                 @click="logout"
               >
                 <v-list-tile-title>logout</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile
+                @click="$store.commit('toggleUpgrading');"
+              >
+                <v-list-tile-title>register</v-list-tile-title>
               </v-list-tile>
             </v-list>
           </v-menu>
@@ -48,11 +54,13 @@
 
 <script>
 import login from './components/login.vue';
+import upgrading from './components/upgrading.vue';
 import firebase from './firebase';
 
 export default {
   components: {
     login,
+    upgrading,
   },
   computed: {
     alert: {

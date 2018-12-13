@@ -7,6 +7,7 @@ const initialUserState = {
   name: null,
   userId: null,
   pendingLogin: false,
+  upgrading: false,
   creatingGame: false,
   currentGame: null,
 };
@@ -26,6 +27,7 @@ export default new Vuex.Store({
       state.user.userId = payload.userId;
       state.user.currentGame = payload.currentGame;
       state.user.pendingLogin = false;
+      state.user.upgrading = false;
     },
     logout: (state) => {
       state.user.name = null;
@@ -37,7 +39,9 @@ export default new Vuex.Store({
       state.error.show = message !== null;
     },
     togglePending: (state) => { state.user.pendingLogin = true; },
+    toggleUpgrading: (state) => { state.user.upgrading = true; },
     setPending: (state, payload) => { state.user.pendingLogin = payload.pending; },
+    setUpgrading: (state, payload) => { state.user.upgrading = payload.upgrading; },
     setCreating: (state, payload) => { state.user.creatingGame = payload.creatingGame; },
     setGame: (state, payload) => {
       state.user.currentGame = payload.currentGame;

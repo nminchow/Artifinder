@@ -2372,6 +2372,10 @@ detect-node@^2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
 
+dialog-polyfill@^0.4.7:
+  version "0.4.10"
+  resolved "https://registry.yarnpkg.com/dialog-polyfill/-/dialog-polyfill-0.4.10.tgz#c4ea68a0deed4abb59a6a2a025c548b278cd532e"
+
 diffie-hellman@^5.0.0:
   version "5.0.3"
   resolved "http://registry.npmjs.org/diffie-hellman/-/diffie-hellman-5.0.3.tgz#40e8ee98f55a2149607146921c63e1ae5f3d2875"
@@ -3163,6 +3167,12 @@ firebase@5.5.5:
     "@firebase/messaging" "0.3.6"
     "@firebase/polyfill" "0.3.3"
     "@firebase/storage" "0.2.3"
+
+firebaseui@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/firebaseui/-/firebaseui-3.4.1.tgz#f440f1cc653d98f97caadf8f58f7d67b83d00fde"
+  dependencies:
+    dialog-polyfill "^0.4.7"
 
 flat-cache@^1.2.1:
   version "1.3.4"
