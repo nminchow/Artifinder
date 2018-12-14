@@ -10,16 +10,16 @@
           <v-menu bottom left offset-y>
             <v-btn icon slot="activator" flat><v-icon>account_circle</v-icon></v-btn>
             <v-list subheader>
-               <v-subheader>{{name}}</v-subheader>
-              <v-list-tile
-                @click="logout"
-              >
-                <v-list-tile-title>logout</v-list-tile-title>
-              </v-list-tile>
+              <v-subheader>{{name}}</v-subheader>
               <v-list-tile
                 @click="$store.commit('toggleUpgrading');"
               >
                 <v-list-tile-title>register</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile
+                @click="logout"
+              >
+                <v-list-tile-title>logout</v-list-tile-title>
               </v-list-tile>
             </v-list>
           </v-menu>

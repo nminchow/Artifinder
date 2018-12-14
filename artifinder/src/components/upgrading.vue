@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import * as firebaseui from 'firebaseui'
+import firebase from './../firebase';
 
 const setUpgrading = function setUpgrading(value) {
   this.$store.commit({
@@ -25,18 +24,6 @@ const setUpgrading = function setUpgrading(value) {
 };
 
 export default {
-  mounted() {
-    const ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start('#firebaseui-auth-container', {
-      signInOptions: [
-        // List of OAuth providers supported.
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      ],
-      signInFlow: 'popup',
-      autoUpgradeAnonymousUsers: true,
-      // Other config options...
-    });
-  },
   methods: {
     setUpgrading,
   },

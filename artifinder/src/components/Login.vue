@@ -44,6 +44,15 @@ const login = function login() {
   this.$validator.validateAll().then((result) => {
     if (!result) return;
     this.loggingIn = true;
+    const user = firebase.instance.auth().currentUser;
+    if (user) {
+      firebase.db.collection('userData').doc(user.uid).set({
+        name: this.name,
+      }).then(() => {
+        this.loggingIn = false;
+        this.setPending(false);
+      })
+    }
     firebase.instance.auth().signInAnonymously().then(() => {
     }).catch((error) => {
       this.$store.commit('setError', error.message);
@@ -78,6 +87,7 @@ export default {
     return {
       name: '',
       loggingIn: false,
+      userListener: null,
     };
   },
   mounted() {
@@ -85,14 +95,20 @@ export default {
     firebase.instance.auth().onAuthStateChanged((user) => {
       if (user) {
         self.createIfNeeded(user).then(() => {
-          firebase.db.collection('userData').doc(user.uid).onSnapshot((document) => {
+          if (self.userListener != null) {
+            self.userListener();
+          }
+          self.userListener = firebase.db.collection('userData').doc(user.uid).onSnapshot((document) => {
             const data = document.data();
-            self.$store.commit({
-              type: 'login',
-              name: data.name,
-              currentGame: data.currentGame,
-              userId: user.uid,
-            });
+            if (data) {
+              self.$store.commit({
+                type: 'login',
+                name: data.name,
+                currentGame: data.currentGame,
+                userId: user.uid,
+                anonymous: user.isAnonymous,
+              });
+            }
             if (self.$store.state.route.params.id || self.$store.state.route.path.endsWith('loading')) return;
             self.$router.push({ path: `/${data.currentGame || ''}` });
           });
