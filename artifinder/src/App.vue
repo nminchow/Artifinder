@@ -6,24 +6,26 @@
         <v-spacer></v-spacer>
         <login/>
         <upgrading/>
-        <v-toolbar-items v-if="$store.state.user.name != null">
+        <v-toolbar-items v-if="$store.state.user.userId != null">
           <v-menu bottom left offset-y>
             <v-btn icon slot="activator" flat><v-icon>account_circle</v-icon></v-btn>
             <v-list subheader>
-              <v-subheader>{{name}}</v-subheader>
+              <v-subheader v-if="name != null">{{name}}</v-subheader>
               <v-list-tile
+                v-if="$store.state.user.anonymous"
                 @click="$store.commit('toggleUpgrading');"
               >
-                <v-list-tile-title>register</v-list-tile-title>
+                <v-list-tile-title>create account</v-list-tile-title>
               </v-list-tile>
               <v-list-tile
                 @click="logout"
               >
-                <v-list-tile-title>logout</v-list-tile-title>
+                <v-list-tile-title>sign out</v-list-tile-title>
               </v-list-tile>
             </v-list>
           </v-menu>
         </v-toolbar-items>
+        <v-btn v-else color="secondary" @click="$store.commit('toggleUpgrading');">Sign in</v-btn>
       </v-toolbar>
       <v-content>
         <v-alert
