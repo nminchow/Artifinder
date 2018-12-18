@@ -6,6 +6,6 @@
 </template>
 <script>
 export default {
-  props: ['pre-text']
-}
+  props: ['pre-text'],
+};
 </script>

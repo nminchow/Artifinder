@@ -43,7 +43,7 @@
 
 <script>
 import firebase from '../firebase';
-import cookieText from './cookieText';
+import cookieText from './cookieText.vue';
 
 const login = function login() {
   this.$validator.validateAll().then((result) => {
@@ -56,7 +56,7 @@ const login = function login() {
       }).then(() => {
         this.loggingIn = false;
         this.setPending(false);
-      })
+      });
       return;
     }
     firebase.instance.auth().signInAnonymously().then(() => {
@@ -105,7 +105,7 @@ export default {
             self.userListener();
           }
           self.userListener = firebase.db.collection('userData').doc(user.uid).onSnapshot((document) => {
-            if (document.exists){
+            if (document.exists) {
               const data = document.data();
               self.$store.commit({
                 type: 'login',

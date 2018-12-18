@@ -45,7 +45,7 @@ export default new Vuex.Store({
     toggleUpgrading: (state) => {
       state.user.pendingLogin = false;
       state.user.upgrading = true;
-     },
+    },
     setPending: (state, payload) => { state.user.pendingLogin = payload.pending; },
     setUpgrading: (state, payload) => {
       state.user.upgrading = payload.upgrading;

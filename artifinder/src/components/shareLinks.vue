@@ -6,7 +6,7 @@
     <v-btn icon :href="twitterUrl" target="_blank">
       <v-icon>fab fa-twitter</v-icon>
     </v-btn>
-    <v-tooltip right>
+    <v-tooltip class="ml-2" right>
       <v-btn slot="activator" icon @click="copyFinderLink">
         <v-icon>link</v-icon>
       </v-btn>

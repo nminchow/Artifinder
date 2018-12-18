@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import firebase from './../firebase';
-import * as firebaseui from 'firebaseui'
-import cookieText from './cookieText'
+import * as firebaseui from 'firebaseui';
+import firebase from '../firebase';
+import cookieText from './cookieText.vue';
 
 const setUpgrading = function setUpgrading(value) {
   this.$store.commit({
@@ -41,33 +41,34 @@ const startUi = function startUi(ui) {
       // List of OAuth providers supported.
       firebase.instance.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.instance.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.instance.auth.GithubAuthProvider.PROVIDER_ID
+      firebase.instance.auth.GithubAuthProvider.PROVIDER_ID,
     ],
     signInFlow: 'popup',
     autoUpgradeAnonymousUsers: true,
     callbacks: {
-      signInSuccessWithAuthResult: function(authResult){},
+      signInSuccessWithAuthResult() {},
       // signInFailure callback must be provided to handle merge conflicts which
       // occur when an existing credential is linked to an anonymous user.
-      signInFailure: function(error) {
+      signInFailure(error) {
         // For merge conflicts, the error.code will be
         // 'firebaseui/anonymous-upgrade-merge-conflict'.
-        if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
+        if (error.code !== 'firebaseui/anonymous-upgrade-merge-conflict') {
           return Promise.resolve();
         }
         // The credential the user tried to sign in with.
-        var cred = error.credential;
-        // Should we copy existing anon data, or just swap to attempted cred? lets opt for the latter for now.
+        const cred = error.credential;
+        // Should we copy existing anon data, or just swap to attempted cred? lets opt for the
+        // latter for now.
         return firebase.instance.auth().signInAndRetrieveDataWithCredential(cred);
-      }
-    }
+      },
+    },
   });
-}
+};
 
 export default {
   data() {
     return {
-      authui: new firebaseui.auth.AuthUI(firebase.instance.auth())
+      authui: new firebaseui.auth.AuthUI(firebase.instance.auth()),
     };
   },
   methods: {
@@ -93,6 +94,5 @@ export default {
   components: {
     cookieText,
   },
-}
+};
 </script>
-
