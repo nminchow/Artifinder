@@ -6,25 +6,29 @@
          in-game.
         </v-card-text>
        <v-form>
-        <v-container grid-list-md>
+        <v-container grid-list-md class="pb-0">
           <v-layout row wrap>
-            <v-text-field
-              label="Username / Steam ID"
-              data-vv-name="name"
-              v-validate="'required'"
-              v-model="name"
-              :error-messages="errors.collect('name')"
-            ></v-text-field>
-            <span class="caption text--secondary font-weight-light pt-3">
-              By setting a username, you agree to our (minimal)
-              <a target="_blank" href="/cookies!">cookie policy</a>.
-            </span>
+            <v-flex xs12>
+              <v-text-field
+                label="Username / Steam ID"
+                data-vv-name="name"
+                v-validate="'required'"
+                v-model="name"
+                :error-messages="errors.collect('name')"
+              ></v-text-field>
+            </v-flex>
           </v-layout>
         </v-container>
       </v-form>
+      <v-card-text class="pt-0">
+        <p class="grey--text pa-0 ma-0">
+          Already have an account? <a @click="$store.commit('toggleUpgrading')">Log in</a>
+        </p>
+      </v-card-text>
       <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
+          <cookieText pre-text="By setting a username" />
           <v-btn
             color="primary"
             @click="login"
@@ -39,11 +43,22 @@
 
 <script>
 import firebase from '../firebase';
+import cookieText from './cookieText.vue';
 
 const login = function login() {
   this.$validator.validateAll().then((result) => {
     if (!result) return;
     this.loggingIn = true;
+    const user = firebase.instance.auth().currentUser;
+    if (user) {
+      firebase.db.collection('userData').doc(user.uid).set({
+        name: this.name,
+      }).then(() => {
+        this.loggingIn = false;
+        this.setPending(false);
+      });
+      return;
+    }
     firebase.instance.auth().signInAnonymously().then(() => {
     }).catch((error) => {
       this.$store.commit('setError', error.message);
@@ -78,6 +93,7 @@ export default {
     return {
       name: '',
       loggingIn: false,
+      userListener: null,
     };
   },
   mounted() {
@@ -85,16 +101,28 @@ export default {
     firebase.instance.auth().onAuthStateChanged((user) => {
       if (user) {
         self.createIfNeeded(user).then(() => {
-          firebase.db.collection('userData').doc(user.uid).onSnapshot((document) => {
-            const data = document.data();
-            self.$store.commit({
-              type: 'login',
-              name: data.name,
-              currentGame: data.currentGame,
-              userId: user.uid,
-            });
-            if (self.$store.state.route.params.id || self.$store.state.route.path.endsWith('loading')) return;
-            self.$router.push({ path: `/${data.currentGame || ''}` });
+          if (self.userListener != null) {
+            self.userListener();
+          }
+          self.userListener = firebase.db.collection('userData').doc(user.uid).onSnapshot((document) => {
+            if (document.exists) {
+              const data = document.data();
+              self.$store.commit({
+                type: 'login',
+                name: data.name,
+                currentGame: data.currentGame,
+                userId: user.uid,
+                anonymous: user.isAnonymous,
+              });
+              if (self.$store.state.route.params.id || self.$store.state.route.path.endsWith('loading')) return;
+              self.$router.push({ path: `/${data.currentGame || ''}` });
+            } else {
+              self.$store.commit({
+                type: 'login',
+                userId: user.uid,
+                anonymous: user.isAnonymous,
+              });
+            }
           });
           this.loggingIn = false;
         });
@@ -115,6 +143,9 @@ export default {
     pendingLogin() {
       return this.$store.state.user.pendingLogin;
     },
+  },
+  components: {
+    cookieText,
   },
 };
 </script>
