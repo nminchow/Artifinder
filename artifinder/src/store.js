@@ -22,6 +22,7 @@ export default new Vuex.Store({
       show: false,
       message: null,
     },
+    navDrawer: false,
   },
   mutations: {
     login(state, payload) {
@@ -54,6 +55,9 @@ export default new Vuex.Store({
     setGame: (state, payload) => {
       state.user.currentGame = payload.currentGame;
     },
+    setNav: (state, payload) => {
+      state.navDrawer  = payload.navDrawer;
+    }
   },
 });
 /* eslint-enable no-param-reassign */
