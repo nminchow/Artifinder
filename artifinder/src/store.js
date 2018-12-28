@@ -12,6 +12,7 @@ const initialUserState = {
   creatingGame: false,
   currentGame: null,
   anonymous: false,
+  permissions: {},
 };
 
 /* eslint-disable no-param-reassign */
@@ -22,6 +23,7 @@ export default new Vuex.Store({
       show: false,
       message: null,
     },
+    navDrawer: false,
   },
   mutations: {
     login(state, payload) {
@@ -31,6 +33,7 @@ export default new Vuex.Store({
       state.user.pendingLogin = false;
       state.user.upgrading = false;
       state.user.anonymous = payload.anonymous;
+      state.user.permissions = payload.permissions;
     },
     logout: (state) => {
       state.user.name = null;
@@ -54,6 +57,9 @@ export default new Vuex.Store({
     setGame: (state, payload) => {
       state.user.currentGame = payload.currentGame;
     },
+    setNav: (state, payload) => {
+      state.navDrawer  = payload.navDrawer;
+    }
   },
 });
 /* eslint-enable no-param-reassign */

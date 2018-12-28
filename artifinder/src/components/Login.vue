@@ -53,6 +53,7 @@ const login = function login() {
     if (user) {
       firebase.db.collection('userData').doc(user.uid).set({
         name: this.name,
+        permissions: {},
       }).then(() => {
         this.loggingIn = false;
         this.setPending(false);
@@ -68,6 +69,12 @@ const login = function login() {
   });
 };
 
+const explicitPath = function explicitPath() {
+  return this.$router.options.routes.map((r) => r.path).some((item) => {
+    return this.$store.state.route.path.endsWith(item);
+  });
+}
+
 const createIfNeeded = function createIfNeeded(user) {
   const userDataRef = firebase.db.collection('userData');
   // create default state if new
@@ -75,6 +82,7 @@ const createIfNeeded = function createIfNeeded(user) {
     const defaultData = {
       name: this.name,
       currentGame: null,
+      permissions: {},
     };
     return userDataRef.doc(user.uid).set(defaultData);
   }
@@ -113,8 +121,9 @@ export default {
                 currentGame: data.currentGame,
                 userId: user.uid,
                 anonymous: user.isAnonymous,
+                permissions: data.permissions,
               });
-              if (self.$store.state.route.params.id || self.$store.state.route.path.endsWith('loading')) return;
+              if (self.$store.state.route.params.id || self.explicitPath()) return;
               self.$router.push({ path: `/${data.currentGame || ''}` });
             } else {
               self.$store.commit({
@@ -135,6 +144,7 @@ export default {
     login,
     setPending,
     createIfNeeded,
+    explicitPath,
   },
   computed: {
     loggedIn() {
