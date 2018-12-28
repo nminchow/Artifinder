@@ -70,10 +70,9 @@ const login = function login() {
 };
 
 const explicitPath = function explicitPath() {
-  return this.$router.options.routes.map((r) => r.path).some((item) => {
-    return this.$store.state.route.path.endsWith(item);
-  });
-}
+  return this.$router.options.routes.map(r => r.path)
+    .some(item => this.$store.state.route.path.endsWith(item));
+};
 
 const createIfNeeded = function createIfNeeded(user) {
   const userDataRef = firebase.db.collection('userData');

@@ -65,33 +65,33 @@
     </v-container>
 </template>
 <script>
+import moment from 'moment';
 import firebase from '../firebase';
-import moment from  'moment';
-import createPrizedTournament from '../components/createPrizedTournament.vue'
+import createPrizedTournament from '../components/createPrizedTournament.vue';
 
 const formatTime = function formatTime(time) {
- return moment(time.toMillis()).format('llll');
-}
+  return moment(time.toMillis()).format('llll');
+};
 
 const setListener = function setListener() {
   const self = this;
   if (this.tournamentsListener != null) this.tournamentsListener();
-  let query = firebase.db.collection('prizedTournaments').orderBy('startTime', 'desc').limit(100);
+  const query = firebase.db.collection('prizedTournaments').orderBy('startTime', 'desc').limit(100);
   this.tournamentsListener = query.onSnapshot((querySnapshot) => {
     self.tournaments = [];
     querySnapshot.forEach((doc) => {
       if (doc.metadata.hasPendingWrites) return;
-      self.tournaments.push({ ...doc.data(), id: doc.id});
+      self.tournaments.push({ ...doc.data(), id: doc.id });
     });
   });
 };
 
 const deleteItem = function deleteItem(item) {
   firebase.db.collection('prizedTournaments').doc(item.id).delete();
-}
+};
 
 export default {
-  data () {
+  data() {
     return {
       tournamentsListener: null,
       search: '',
@@ -101,15 +101,15 @@ export default {
           text: 'Name',
           align: 'left',
           sortable: false,
-          value: 'name'
+          value: 'name',
         },
         { text: 'Start Time', value: 'startTime' },
         { text: 'Prize', value: 'prize', sortable: false },
         { text: 'Description', value: 'description', sortable: false },
-        { text: 'Join', sortable: false }
+        { text: 'Join', sortable: false },
       ],
       tournaments: [],
-    }
+    };
   },
   methods: {
     setListener,
@@ -121,12 +121,12 @@ export default {
   },
   computed: {
     editPermission() {
-      const permissions = this.$store.state.user.permissions;
+      const { permissions } = this.$store.state.user;
       return permissions && permissions.manageTournaments;
     },
   },
   components: {
     createPrizedTournament,
   },
-}
+};
 </script>

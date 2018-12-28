@@ -117,14 +117,14 @@
 </template>
 
 <script>
+import moment from 'moment';
 import firebase from '../firebase';
-import moment from  'moment';
 
 const createGame = function createGame() {
   this.$validator.validateAll().then((result) => {
     if (result) {
       this.creating = true;
-      if(!this.link.startsWith('http')) {
+      if (!this.link.startsWith('http')) {
         this.link = `https://${this.link}`;
       }
       firebase.db.collection('prizedTournaments').add({
@@ -144,7 +144,7 @@ const createGame = function createGame() {
 
 const setCreating = function setCreating(value) {
   this.$emit('update:display', value);
-}
+};
 
 export default {
   props: ['display'],

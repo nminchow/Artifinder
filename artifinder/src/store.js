@@ -58,8 +58,8 @@ export default new Vuex.Store({
       state.user.currentGame = payload.currentGame;
     },
     setNav: (state, payload) => {
-      state.navDrawer  = payload.navDrawer;
-    }
+      state.navDrawer = payload.navDrawer;
+    },
   },
 });
 /* eslint-enable no-param-reassign */

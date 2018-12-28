@@ -34,7 +34,7 @@ export default {
         type: 'setNav',
         navDrawer: value,
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>

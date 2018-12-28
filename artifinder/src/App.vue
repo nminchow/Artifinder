@@ -29,7 +29,13 @@
             </v-list>
           </v-menu>
         </v-toolbar-items>
-        <v-btn v-if="!loggedIn" color="secondary" @click="$store.commit('toggleUpgrading');">Sign in</v-btn>
+        <v-btn
+          v-if="!loggedIn"
+          color="secondary"
+          @click="$store.commit('toggleUpgrading');"
+        >
+          Sign in
+        </v-btn>
       </v-toolbar>
       <v-content>
         <v-alert
@@ -90,8 +96,8 @@ export default {
       return this.$store.state.user.name;
     },
     loggedIn() {
-      return this.$store.state.user.userId != null
-    }
+      return this.$store.state.user.userId != null;
+    },
   },
   methods: {
     logout() {
@@ -102,7 +108,7 @@ export default {
         type: 'setNav',
         navDrawer: !this.$store.state.navDrawer,
       });
-    }
+    },
   },
 };
 </script>
