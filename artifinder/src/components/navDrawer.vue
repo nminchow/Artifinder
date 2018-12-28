@@ -6,7 +6,7 @@
     app
   >
     <v-list>
-      <v-list-tile @click="">
+      <v-list-tile @click="$router.push('tournamentBrowser')">
         <v-list-tile-action>
           <v-icon>format_list_bulleted</v-icon>
         </v-list-tile-action>
@@ -14,7 +14,7 @@
           <v-list-tile-title>Tournament Listings</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile @click="">
+      <v-list-tile @click="$router.push('prizedTournaments')">
         <v-list-tile-action>
           <v-icon>money</v-icon>
         </v-list-tile-action>

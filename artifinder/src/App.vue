@@ -11,7 +11,6 @@
         <login/>
         <upgrading/>
         <v-toolbar-items>
-          <v-btn flat>Prized Tournaments</v-btn>
           <v-menu v-if="loggedIn" bottom left offset-y>
             <v-btn icon slot="activator" flat><v-icon>account_circle</v-icon></v-btn>
             <v-list subheader>

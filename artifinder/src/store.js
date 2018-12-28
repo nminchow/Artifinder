@@ -12,6 +12,7 @@ const initialUserState = {
   creatingGame: false,
   currentGame: null,
   anonymous: false,
+  permissions: {},
 };
 
 /* eslint-disable no-param-reassign */
@@ -32,6 +33,7 @@ export default new Vuex.Store({
       state.user.pendingLogin = false;
       state.user.upgrading = false;
       state.user.anonymous = payload.anonymous;
+      state.user.permissions = payload.permissions;
     },
     logout: (state) => {
       state.user.name = null;
