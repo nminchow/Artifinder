@@ -27,6 +27,7 @@
                 :headers="headers"
                 :items="tournaments"
                 :search="search"
+                :pagination.sync="pagination"
               >
                 <template slot="items" slot-scope="props">
                   <td>{{ props.item.name }}</td>
@@ -109,6 +110,7 @@ export default {
         { text: 'Join', sortable: false },
       ],
       tournaments: [],
+      pagination: {},
     };
   },
   methods: {
@@ -118,6 +120,7 @@ export default {
   },
   mounted() {
     this.setListener();
+    this.pagination.rowsPerPage = 25;
   },
   computed: {
     editPermission() {
