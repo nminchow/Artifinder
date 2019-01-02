@@ -144,7 +144,7 @@ const isSelf = function isSelf(player) {
 };
 
 const removePlayer = function removePlayer(player) {
-  gameHelper.removeFromGame(player.id, this.game.id).then(() => {
+  gameHelper.removeGameMember(player.id, this.game.id).then(() => {
     gameHelper.removeUserGameRef(player.id);
   });
 };

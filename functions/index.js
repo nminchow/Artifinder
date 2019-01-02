@@ -62,6 +62,17 @@ exports.redirectAfterHeaders = functions.https.onRequest((req, res) => {
   res.status(200).send(result);
 });
 
+
+exports.countPlayers = functions.firestore
+  .document('/games/{gameId}/members/{memberId}')
+  .onWrite((change, context) => {
+    const gameRef = change.before.ref.parent.parent;
+
+    return change.before.ref.parent.get().then(snap => {
+      return gameRef.update({ currentPlayers: snap.size });
+    });
+  });
+
 exports.createGame = functions.firestore
   .document('games/{gameId}')
   .onCreate((snap, context) => {
