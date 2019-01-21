@@ -25,7 +25,7 @@ import gameFormatter from '../formatHelpers/game';
 
 const preview = function preview() {
   this.$router.push({ path: `/${this.game.id}` });
-  if (this.$vuetify.breakpoint.sm) {
+  if (this.$vuetify.breakpoint.smAndDown) {
     window.scrollTo(0, document.body.scrollHeight);
   }
 };
