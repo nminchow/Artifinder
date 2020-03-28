@@ -8,6 +8,7 @@ RUN apt-get update -qq
 
 RUN apt-get install vim -y
 
-RUN yarn install
 WORKDIR /app/artifinder
+COPY artifinder/package.json .
+RUN yarn install
 CMD yarn serve
