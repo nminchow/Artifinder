@@ -1,5 +1,5 @@
 # Artifinder
-[Artifinder](https://artifinder.com) helps users find and share tournaments for Valve's card game *Artifact*.
+[Artifinder](https://artifinder-191f7.firebaseapp.com/) helps users find and share tournaments for Valve's card game *Artifact*.
 
 
 ## Built With
