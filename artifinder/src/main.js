@@ -19,13 +19,13 @@ sync(store, router);
 Vue.use(VeeValidate);
 Vue.use(Vuetify, {
   theme: {
-    primary: '#a59465',
-    secondary: '#56077a',
-    accent: '#3e918b',
-    error: '#e57937',
-    warning: '#ffeb3b',
+    primary: '#d7a556',
+    secondary: '#a40e0e',
+    accent: '#b5c3c9',
+    error: '#cb7426',
+    warning: '#85434c',
     info: '#2196f3',
-    success: '#a59465',
+    success: '#d7a556',
   },
   iconfont: 'fa',
 });

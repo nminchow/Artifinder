@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "artifinder-191f7",
-    "test": "artifinder-test",
-    "prod": "artifinder-191f7"
+    "default": "total-tavern",
+    "test": "total-tavern-test",
+    "prod": "total-tavern"
   }
 }

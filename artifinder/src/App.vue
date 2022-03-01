@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <v-app id="inspire" dark>
+    <v-app dark>
       <navDrawer/>
       <v-toolbar app fixed>
         <v-toolbar-side-icon @click.stop="toggleNav">
           <v-icon>menu</v-icon>
         </v-toolbar-side-icon>
-        <v-toolbar-title>Artifinder</v-toolbar-title>
+        <v-toolbar-title>Total Tavern</v-toolbar-title>
         <v-spacer></v-spacer>
         <login/>
         <upgrading/>
@@ -49,14 +49,14 @@
       </v-content>
       <v-footer dark height="auto" >
         <v-layout justify-center row wrap>
-          <v-btn icon href="https://discord.gg/7arjbp4" target="_blank">
+          <v-btn icon href="https://discord.gg/ENQqQAwuUF" target="_blank">
             <v-icon>fab fa-discord</v-icon>
           </v-btn>
-          <v-btn icon href="https://github.com/nminchow/Artifinder" target="_blank">
-            <v-icon>fab fa-github</v-icon>
+          <v-btn icon href="https://www.youtube.com/channel/UCNDJiDFJWaiKktyUBmVzGYA" target="_blank">
+            <v-icon>fab fa-youtube</v-icon>
           </v-btn>
-          <v-btn icon href="https://www.patreon.com/leonrdo" target="_blank">
-            <v-icon>fab fa-patreon</v-icon>
+          <v-btn icon href="https://twitter.com/turinrts" target="_blank">
+            <v-icon>fab fa-twitter</v-icon>
           </v-btn>
         </v-layout>
       </v-footer>
@@ -112,3 +112,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+#app {
+  background: url('/backgroundidea1.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+</style>
